@@ -1,0 +1,40 @@
+@using NetCore.Simple
+@model NetCore.Simple.Models.Editor
+
+@{
+
+    string id = Guid.NewGuid().ToString("N"); 
+
+    string submitURL = Model.SubmitURL == null ?
+                        Context.Request.Path.ToString() : Url.Content("~/" + Model.SubmitURL);
+    string data = Model.Data == null ? null : Html.FormData(Model.Data);
+}
+
+
+<div id="@id" class="container body-content deletable">
+                                                        @* also data-form-success-reload & data-form-success  *@
+    <form data-form-data="@data" data-form-method="@Model.Method" data-form-submit="@submitURL" data-form-success-url="@submitURL">
+
+        @RenderBody()
+
+        <input type="submit" class="btn btn-primary" value="@Model.SubmitText" />
+
+        @if (Model.IsEditing)
+        {
+            <input type="button" class="btn btn-danger" onclick="$('#@(id).deletable').addClass('shown-del')" value="Delete" />
+        }
+
+    </form>
+
+    <form data-form-data="@data" data-form-method="Delete" data-form-submit="@submitURL"
+          class="delete-conf" data-form-success-url="@submitURL">
+
+        <h3>Are you sure you want to delete?</h3>
+
+        <input type="button" class="btn btn-danger" onclick="$('#@(id).deletable').removeClass('shown-del')" value="No" />
+
+        <input type="submit" class="btn btn-success" value="Yes" />
+
+    </form>
+
+</div>

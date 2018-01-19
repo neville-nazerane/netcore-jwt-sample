@@ -1,0 +1,21 @@
+.error-msg {
+    color: red;
+    font-weight: bold;
+}
+
+.info-msg {
+    color: #a76c00;
+    font-weight: bold;
+}
+
+.delete-conf {
+    display: none;
+}
+
+.shown-del form.delete-conf {
+    display: block !important;
+}
+
+.shown-del form:not(.delete-conf) {
+    display: none;
+}
